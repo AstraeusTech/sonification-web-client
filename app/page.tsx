@@ -1,43 +1,33 @@
-"use client";
-
-import { Canvas, useLoader } from "@react-three/fiber";
-import FileSelection from "./_components/FileSelection";
-import { Suspense, useEffect, useState } from "react";
-import { OrbitControls, Point } from "@react-three/drei";
-import { PCDLoader } from "three/examples/jsm/loaders/PCDLoader.js";
-import THREE, { Vector3, Box3 } from "three";
+import Image from 'next/image';
+import { ChevronDown } from './_components/icons';
 
 export default function Home() {
-  const [file, setFile] = useState<File>();
-  // const ply = useLoader(PLYLoader, file?.name as string);
-  // const gltf = useLoader(GLTFLoader, '/point_cloud.gltf');
-  const pcd = useLoader(PCDLoader, "/point_cloud.pcd");
-  const [center, setCenter] = useState<Vector3>();
-
-  useEffect(() => {
-    let box = new Box3().setFromObject(pcd);
-    let newCenter = box.getCenter(new Vector3());
-    setCenter(newCenter);
-  }, [pcd]);
-
   return (
-    <div>
-      {/* <p>Hello</p>
-      <button className="btn btn-primary">Click me</button>
-      <FileSelection setFile={setFile} /> */}
-      <div className="border">
-        <Canvas
-          style={{ height: "100vh", width: "100vw" }}
-          shadows
-          camera={{
-            position: [center?.x ?? 0, center?.y ?? 0, center?.z ?? 0],
-          }}
-        >
-          {/* <pointLight color="#f6f3ea" position={[10, 5, 10]} intensity={2} /> */}
-            <primitive object={pcd} scale={[0.25, 0.25, 0.25]} />
-          <OrbitControls />
-        </Canvas>
+    <div className="hero min-h-screen ">
+      <div className="hero-content text-center">
+        <div className="max-w-md">
+          <Image
+            src="/waves.png"
+            className="m-auto"
+            width={125}
+            height={100}
+            alt="logo"
+          />
+          <h1 className="text-7xl font-bold text-slate-800">Astrorpheus</h1>
+          <h2 className="text-2xl text-slate-500 font-semibold mt-2">
+            A Space Odyssey in Sound
+          </h2>
+          <p className="py-6">
+            Explore space in way you have never experienced before. Astrorpheus
+            is a space odyssey in sound. Explore the cosmos through the sounds
+            of the planets, stars, and other celestial bodies.
+          </p>
+          <button className="btn text-slate-50 transition-all duration-500 bg-gradient-to-tl from-rose-400 via-fuchsia-500 to-indigo-500 bg-size-200 bg-pos-0 hover:bg-pos-100">
+            Get Started
+          </button>
+        </div>
       </div>
+      <ChevronDown className="animate-bounce absolute bottom-8" size={'lg'} />
     </div>
   );
 }

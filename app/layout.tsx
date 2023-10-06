@@ -1,19 +1,19 @@
-import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Sonification',
   description: 'Sonification web app',
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-slate-50">
       <body>{children}</body>
     </html>
-  )
+  );
 }
