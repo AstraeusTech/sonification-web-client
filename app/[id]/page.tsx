@@ -1,8 +1,10 @@
 "use client";
-import { WaveSurferPlayer } from "../_components/AudioPlayer";
+import { useRef } from "react";
 import ModelViewer from "../_components/ModelViewer";
+import WaveSurferPlayer from "../_components/waveSurfer";
 
 export default function Sonification() {
+  const container: any = useRef();
   return (
     <>
       <ModelViewer />
@@ -12,8 +14,8 @@ export default function Sonification() {
           waveColor="rgb(200, 0, 200)"
           progressColor="rgb(100, 0, 100)"
           url={"/sound-combined.wav"}
-          container={""}
-          barAlign="bottom"
+          container={container}
+          barAlign={undefined}
           barHeight={5}
           barWidth={4}
           barGap={2}
