@@ -1,35 +1,37 @@
 "use client";
 
-import { Canvas, useLoader } from "@react-three/fiber";
-import { useEffect, useState } from "react";
-import { OrbitControls, Center } from "@react-three/drei";
+import {
+  Center,
+  OrbitControls,
+  OrthographicCamera,
+  Plane,
+} from "@react-three/drei";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
+import { Box3, DoubleSide, MeshBasicMaterial, Vector3 } from "three";
 import { PCDLoader } from "three/examples/jsm/loaders/PCDLoader.js";
-import { Vector3, Box3 } from "three";
+import Model from "./Model";
 
-export default function ModelViewer() {
-// const pcd = useLoader(PCDLoader, file?.name as string);
-const pcd = useLoader(PCDLoader, "/point_cloud.pcd");
-const [size, setSize] = useState<Vector3>();
+interface ModelViewerProps {
+  file?: File;
+}
 
-useEffect(() => {
-  let box = new Box3().setFromObject(pcd);
-  let size = box.getSize(new Vector3());
-  setSize(size);
-}, [pcd]);
+export default function ModelViewer(props: ModelViewerProps) {
+  // const pcd = useLoader(PCDLoader, file?.name as string);
+  const pcd = useLoader(PCDLoader, "/point_cloud.pcd");
+  const [size, setSize] = useState<Vector3>();
+
+  useEffect(() => {
+    let box = new Box3().setFromObject(pcd);
+    let size = box.getSize(new Vector3());
+    setSize(size);
+  }, [pcd]);
 
   return (
-    <Canvas
-      style={{ height: "100vh", width: "100vw" }}
-      shadows
-      camera={{
-        position: [(size?.x || 0)/4, 0, (size?.z || 0)],
-      }}
-    >
-      <ambientLight intensity={0.5} />
-      <Center>
-        <primitive object={pcd} scale={[0.25, 0.25, 0.25]} />
-      </Center>
-      <OrbitControls />
+    <Canvas style={{ height: "100vh", width: "100vw" }} shadows>
+      <Model pcd={pcd} size={size} />
+      
+      <OrbitControls enablePan={false} />
     </Canvas>
   );
 }
