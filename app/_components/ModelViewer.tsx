@@ -15,6 +15,8 @@ export default function ModelViewer(props: ModelViewerProps) {
   const pcd = useLoader(PCDLoader, "/point_cloud.pcd");
   const [size, setSize] = useState<Vector3>();
 
+  pcd.material.size = 2.5;
+
   useEffect(() => {
     let box = new Box3().setFromObject(pcd);
     let size = box.getSize(new Vector3());
