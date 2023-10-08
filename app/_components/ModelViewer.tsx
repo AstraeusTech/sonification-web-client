@@ -11,11 +11,12 @@ interface ModelViewerProps {
   file?: File;
   currentTime: MutableRefObject<number>;
   view: MutableRefObject<string>;
+  url: string;
 }
 
 export default function ModelViewer(props: ModelViewerProps) {
   // const pcd = useLoader(PCDLoader, file?.name as string);
-  const pcd = useLoader(PCDLoader, "/point.pcd");
+  const pcd = useLoader(PCDLoader, props.url);
   const [size, setSize] = useState<Vector3>();
 
   pcd.material.size = 2.5;
