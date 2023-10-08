@@ -22,13 +22,8 @@ export default function Model(props: ModelProps) {
   
   useFrame(({ clock }) => {
   camera.near = 0.1;
-    const increments = (30 / (props.size?.x ?? 1)) * 2;
-    if (
-      planeRef.current &&
-      planeRef.current.position.x < (props.size?.x ?? 0) / 2
-    ) {
-      planeRef.current.position.x += increments;
-    }
+   planeRef.current.position.x =
+     (((props.size?.x ?? 0) / 2) * props.currentTime.current) / 30;
     props.pcd.material.size = camera.current.zoom;
 
     switch (props.view?.current) {
