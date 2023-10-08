@@ -39,6 +39,7 @@ export default function ToolOverlay(props: ToolOverlayProps): JSX.Element {
         <option value={"top"}>Top</option>
         <option value={"bottom"}>Bottom</option>
         <option value={"side"}>Side</option>
+        <option value={"free"}>Free View</option>
       </select>
     </div>
   );
