@@ -1,32 +1,49 @@
 "use client";
 
-import {
-  Center,
-  OrbitControls,
-  OrthographicCamera,
-  Plane,
-  Box,
-} from "@react-three/drei";
-import { useFrame, useLoader } from "@react-three/fiber";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { Box, Center, OrthographicCamera } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { MutableRefObject, useRef, useState } from "react";
 import { DoubleSide, MeshBasicMaterial, Vector3 } from "three";
-import { PCDLoader } from "three/examples/jsm/loaders/PCDLoader.js";
 
 interface ModelProps {
   pcd?: any;
   size?: Vector3;
   pixelThickness?: number;
-  view?: string
   currentTime: MutableRefObject<number>;
+  view?: MutableRefObject<string>;
 }
 
 export default function Model(props: ModelProps) {
+  const [position, setPosition] = useState<Vector3 | undefined>(
+    new Vector3((props.size?.x || 0) / 4, 0, props.size?.z || 0)
+  );
   const planeRef: any = useRef();
   const camera: any = useRef();
   
   useFrame(({ clock }) => {
-    planeRef.current.position.x = (props.size?.x ?? 0)/2 * props.currentTime.current/30
-    props.pcd.material.size = camera.current.zoom
+  camera.near = 0.1;
+   planeRef.current.position.x =
+     (((props.size?.x ?? 0) / 2) * props.currentTime.current) / 30;
+    props.pcd.material.size = camera.current.zoom;
+
+    switch (props.view?.current) {
+      case "top": {
+        setPosition(new Vector3(0, 0, props.size?.z ?? 0 * 4));
+        break;
+      }
+      case "bottom": {
+        setPosition(new Vector3(0, 0, (props.size?.z ?? 0) * -4));
+        break;
+      }
+      case "side": {
+        setPosition(new Vector3(0, (props.size?.z ?? 0) * -4, 0));
+        break;
+      }
+      default: {
+        setPosition(position);
+        break;
+      }
+    }
   });
 
   return (
@@ -49,11 +66,7 @@ export default function Model(props: ModelProps) {
       <Center>
         <primitive object={props.pcd} scale={[0.5, 0.5, 0.5]} />
       </Center>
-      <OrthographicCamera
-        ref={camera}
-        makeDefault
-        position={[(props.size?.x || 0) / 4, 0, props.size?.z || 0]}
-      />
+      <OrthographicCamera ref={camera} makeDefault position={position} />
     </mesh>
   );
 }
