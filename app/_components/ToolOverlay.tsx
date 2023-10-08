@@ -1,6 +1,11 @@
+import { MutableRefObject } from "react";
 import WaveSurferPlayer from "./waveSurfer";
 
-export default function ToolOverlay(): JSX.Element {
+interface ToolOverlayProps {
+  currentTime: MutableRefObject<number>;
+}
+
+export default function ToolOverlay(props: ToolOverlayProps): JSX.Element {
   return (
     <div className="absolute bottom-0 w-full px-20">
       <WaveSurferPlayer
@@ -15,8 +20,8 @@ export default function ToolOverlay(): JSX.Element {
         barGap={2}
         barRadius={3}
         mediaControls={true}
-        normalize={true}
-      />
+        normalize={true} 
+        currentTime={props.currentTime}      />
     </div>
   );
 }
