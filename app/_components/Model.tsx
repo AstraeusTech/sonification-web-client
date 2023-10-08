@@ -39,8 +39,10 @@ export default function Model(props: ModelProps) {
         setPosition(new Vector3(0, (props.size?.z ?? 0) * -4, 0));
         break;
       }
+      case "free":{
+        break;
+      }
       default: {
-        setPosition(position);
         break;
       }
     }
