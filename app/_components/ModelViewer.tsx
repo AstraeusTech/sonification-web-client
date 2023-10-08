@@ -1,19 +1,15 @@
 "use client";
 
-import {
-  Center,
-  OrbitControls,
-  OrthographicCamera,
-  Plane,
-} from "@react-three/drei";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
-import { Box3, DoubleSide, MeshBasicMaterial, Vector3 } from "three";
+import { OrbitControls } from "@react-three/drei";
+import { Canvas, useLoader } from "@react-three/fiber";
+import { MutableRefObject, useEffect, useState } from "react";
+import { Box3, Vector3 } from "three";
 import { PCDLoader } from "three/examples/jsm/loaders/PCDLoader.js";
 import Model from "./Model";
 
 interface ModelViewerProps {
   file?: File;
+  view: MutableRefObject<string>;
 }
 
 export default function ModelViewer(props: ModelViewerProps) {
@@ -30,9 +26,9 @@ export default function ModelViewer(props: ModelViewerProps) {
   }, [pcd]);
 
   return (
-    <Canvas style={{ height: "100vh", width: "100vw" }} shadows>
-      <Model pcd={pcd} size={size} />
-      
+    <Canvas className="w-screen" style={{ height: "100vh" }} shadows>
+      <Model pcd={pcd} size={size} view={props.view} />
+
       <OrbitControls enablePan={false} />
     </Canvas>
   );
