@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.427.0",
+    "@aws-sdk/s3-request-presigner": "^3.427.0",
     "@react-three/drei": "^9.86.3",
     "@react-three/fiber": "^8.14.4",
     "@types/three": "^0.156.0",

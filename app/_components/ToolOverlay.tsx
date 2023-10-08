@@ -4,6 +4,7 @@ import WaveSurferPlayer from "./waveSurfer";
 interface ToolOverlayProps {
   currentTime: MutableRefObject<number>;
   view: MutableRefObject<string>;
+  url: string;
 }
 
 export default function ToolOverlay(props: ToolOverlayProps): JSX.Element {
@@ -14,7 +15,7 @@ export default function ToolOverlay(props: ToolOverlayProps): JSX.Element {
           height={100}
           waveColor="rgb(125, 25, 25)"
           progressColor="rgb(255, 0, 0)"
-          url={"/sound-combined.wav"}
+          url={props.url}
           container={""}
           barHeight={5}
           barWidth={4}
