@@ -7,13 +7,15 @@ import {
   Plane,
 } from "@react-three/drei";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { Box3, DoubleSide, MeshBasicMaterial, Vector3 } from "three";
 import { PCDLoader } from "three/examples/jsm/loaders/PCDLoader.js";
 import Model from "./Model";
 
 interface ModelViewerProps {
   file?: File;
+  view?: string;
+  currentTime: MutableRefObject<number>;
 }
 
 export default function ModelViewer(props: ModelViewerProps) {
@@ -31,7 +33,7 @@ export default function ModelViewer(props: ModelViewerProps) {
 
   return (
     <Canvas style={{ height: "100vh", width: "100vw" }} shadows>
-      <Model pcd={pcd} size={size} />
+      <Model pcd={pcd} size={size} currentTime={props.currentTime} view={props.view} />
       
       <OrbitControls enablePan={false} />
     </Canvas>

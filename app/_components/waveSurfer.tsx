@@ -1,19 +1,23 @@
 // Import React hooks
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 
 // Import WaveSurfer
 import WaveSurfer, { WaveSurferOptions } from "wavesurfer.js";
 
+interface WaveSurferProps extends WaveSurferOptions {
+  currentTime: MutableRefObject<number>;
+}
+
 // WaveSurfer hook
-const useWavesurfer = (containerRef: any, options: WaveSurferOptions) => {
-  const [wavesurfer, setWavesurfer] = useState(null);
+const useWavesurfer = (containerRef: any, options: WaveSurferProps) => {
+  const [wavesurfer, setWavesurfer] = useState<WaveSurfer | undefined>();
 
   // Initialize wavesurfer when the container mounts
   // or any of the props change
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const ws: any = WaveSurfer.create({
+    const ws: WaveSurfer = WaveSurfer.create({
       ...options,
       container: containerRef.current,
     });
@@ -30,11 +34,11 @@ const useWavesurfer = (containerRef: any, options: WaveSurferOptions) => {
 
 // Create a React component that will render wavesurfer.
 // Props are wavesurfer options.
-export default function WaveSurferPlayer(props: WaveSurferOptions) {
+export default function WaveSurferPlayer(props: WaveSurferProps) {
   const containerRef: any = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const wavesurfer: any = useWavesurfer(containerRef, props);
+  const wavesurfer: WaveSurfer | undefined = useWavesurfer(containerRef, props);
 
   // Initialize wavesurfer when the container mounts
   // or any of the props change
@@ -47,15 +51,16 @@ export default function WaveSurferPlayer(props: WaveSurferOptions) {
     const subscriptions = [
       wavesurfer.on("play", () => setIsPlaying(true)),
       wavesurfer.on("pause", () => setIsPlaying(false)),
-      wavesurfer.on("timeupdate", (currentTime: any) =>
-        setCurrentTime(currentTime)
-      ),
+      wavesurfer.on("timeupdate", (currentTime: any) => {
+        setCurrentTime(currentTime);
+        props.currentTime.current = currentTime;
+      }),
     ];
 
     return () => {
       subscriptions.forEach((unsub) => unsub());
     };
-  }, [wavesurfer]);
+  }, [props.currentTime, wavesurfer]);
 
   return <div ref={containerRef} style={{ minHeight: "120px" }} />;
 }

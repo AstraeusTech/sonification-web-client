@@ -8,7 +8,7 @@ import {
   Box,
 } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { DoubleSide, MeshBasicMaterial, Vector3 } from "three";
 import { PCDLoader } from "three/examples/jsm/loaders/PCDLoader.js";
 
@@ -16,6 +16,8 @@ interface ModelProps {
   pcd?: any;
   size?: Vector3;
   pixelThickness?: number;
+  view?: string
+  currentTime: MutableRefObject<number>;
 }
 
 export default function Model(props: ModelProps) {
@@ -23,13 +25,8 @@ export default function Model(props: ModelProps) {
   const camera: any = useRef();
   
   useFrame(({ clock }) => {
-    const increments = 30/(props.size?.x ?? 1)*2;
-    if (planeRef.current && planeRef.current.position.x < (props.size?.x ?? 0)/2) {
-      planeRef.current.position.x += increments;
-    }
+    planeRef.current.position.x = (props.size?.x ?? 0)/2 * props.currentTime.current/30
     props.pcd.material.size = camera.current.zoom
-
-    console.log(camera.current.zoom, props.pcd.material.size)
   });
 
   return (
