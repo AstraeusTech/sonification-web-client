@@ -1,36 +1,48 @@
-import Image from 'next/image';
-import { ChevronDown } from './_components/icons';
+"use client";
+import Image from "next/image";
+import { useState } from "react";
+import FileSelection from "./_components/FileSelection";
+import { ChevronDown } from "./_components/icons";
 
 export default function Home() {
+  const [showFileSelection, setShowFileSelection] = useState(false);
+
   return (
     <main>
       <div className="hero min-h-screen hero-pattern">
         <div className="hero-content text-center">
-          <div className="max-w-lg">
-            <Image
-              src="/waves.png"
-              className="m-auto"
-              width={125}
-              height={100}
-              alt="logo"
-            />
-            <h1 className="text-7xl font-bold text-slate-800">Astrorpheus</h1>
-            <h2 className="text-2xl text-slate-500 font-semibold mt-2">
-              A Space Odyssey in Sound
-            </h2>
-            <p className="py-6 text-lg">
-              Explore space in way you have never experienced before.
-              Astrorpheus is a space odyssey in sound. Explore the cosmos
-              through the sounds of the planets, stars, and other celestial
-              bodies.
-            </p>
-            <button className="btn text-slate-50 transition-all duration-500 bg-gradient-to-tl from-rose-400 via-fuchsia-500 to-indigo-500 bg-size-200 bg-pos-0 hover:bg-pos-100">
-              Get Started
-            </button>
-          </div>
+          {showFileSelection ? (
+            <FileSelection />
+          ) : (
+            <div className="max-w-lg">
+              <Image
+                src="/waves.png"
+                className="m-auto"
+                width={125}
+                height={100}
+                alt="logo"
+              />
+              <h1 className="text-7xl font-bold text-slate-800">Astrorpheus</h1>
+              <h2 className="text-2xl text-slate-500 font-semibold mt-2">
+                A Space Odyssey in Sound
+              </h2>
+              <p className="py-6 text-lg">
+                Explore space in way you have never experienced before.
+                Astrorpheus is a space odyssey in sound. Explore the cosmos
+                through the sounds of the planets, stars, and other celestial
+                bodies.
+              </p>
+              <button
+                onClick={() => setShowFileSelection(true)}
+                className="btn text-slate-50 transition-all duration-500 bg-gradient-to-tl from-rose-400 via-fuchsia-500 to-indigo-500 bg-size-200 bg-pos-0 hover:bg-pos-100"
+              >
+                Get Started
+              </button>
+            </div>
+          )}
         </div>
         <a href="#features" className="absolute bottom-8">
-          <ChevronDown className="animate-bounce" size={'lg'} />
+          <ChevronDown className="animate-bounce" size={"lg"} />
         </a>
       </div>
 
