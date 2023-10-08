@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function NavBar() {
   const routes = [
@@ -9,12 +10,12 @@ export function NavBar() {
   ];
 
   return (
-    <div className="fixed w-full bg-slate-50">
+    <div className="fixed w-full bg-slate-50 z-10">
       <nav className="navbar container text-xl">
-        <a className="" href="/">
+        <Link href="/">
           <Image src="/waves.png" width={50} height={50} alt="logo" />
           <p className="ml-2 font-semibold">Astrorpheus</p>
-        </a>
+        </Link>
         <div className="ml-8">
           {routes.map((r) => (
             <a
