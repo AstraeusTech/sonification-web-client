@@ -7,7 +7,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 export const dynamic = "force-dynamic";
 
-const client = new S3Client({ region: process.env.AWS_DEFAULT_REGION });
+const client = new S3Client();
 const bucket = process.env.S3_BUCKET;
 
 export async function GET(_request: Request) {

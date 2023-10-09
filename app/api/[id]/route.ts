@@ -1,5 +1,5 @@
-import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 interface GetParams {
   params: {
@@ -7,7 +7,7 @@ interface GetParams {
   };
 }
 
-const client = new S3Client({ region: process.env.AWS_DEFAULT_REGION });
+const client = new S3Client();
 const bucket = process.env.S3_BUCKET;
 
 export async function GET(request: Request, { params }: GetParams) {
@@ -17,12 +17,12 @@ export async function GET(request: Request, { params }: GetParams) {
 
   const getSoundFile = new GetObjectCommand({
     Bucket: bucket,
-    Key: id + ".wav",
+    Key: id + '.wav',
   });
 
   const get3DModelFile = new GetObjectCommand({
     Bucket: bucket,
-    Key: id + ".pcd",
+    Key: id + '.pcd',
   });
 
   return new Response(
@@ -33,6 +33,6 @@ export async function GET(request: Request, { params }: GetParams) {
       modelFileUrl: await getSignedUrl(client, get3DModelFile, {
         expiresIn: 3600,
       }),
-    })
+    }),
   );
 }
