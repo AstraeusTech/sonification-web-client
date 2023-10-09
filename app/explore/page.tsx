@@ -1,34 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic'
+
 interface Thumbnail {
   url: string;
   fileName: string;
 }
 
-// async function getThumbnails() {
-//   try {
-//     const data = await fetch(`${process.env.API_URL}/api/images`, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       next: {
-//         revalidate: 3600,
-//       },
-//     });
-//     return await data.json();
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+async function getThumbnails() {
+  try {
+    const data = await fetch(`${process.env.API_URL}/api/images`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: {
+        revalidate: 3600,
+      },
+    });
+    return await data.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export default async function Explore() {
-  // const data: Thumbnail[] = await getThumbnails();
+  const data: Thumbnail[] = await getThumbnails();
 
   return (
     <div className="container pt-24">
-      {/* <h1 className="text-3xl font-bold mb-4">Latest Uploads</h1>
+      <h1 className="text-3xl font-bold mb-4">Latest Uploads</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {data && data.map((image, index) => (
           <Link href={image.fileName ?? ""} key={`model-${index}`}>
@@ -41,7 +43,7 @@ export default async function Explore() {
             </div>
           </Link>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }
