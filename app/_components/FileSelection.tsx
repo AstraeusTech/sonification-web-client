@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function FileSelection() {
@@ -9,26 +9,73 @@ export default function FileSelection() {
   const router = useRouter();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoading(true);
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      try {
-        // Create a FileReader to read the file as an ArrayBuffer
-        const fileReader = new FileReader();
+      await handleFile(selectedFile);
+    }
+  };
 
-        fileReader.onload = async () => {
-          const arrayBuffer = fileReader.result; // This is the ArrayBuffer
+  const handleFile = async (file: File) => {
+    
+    setLoading(true);
+    try {
+      // Create a FileReader to read the file as an ArrayBuffer
+      const fileReader = new FileReader();
+
+      fileReader.onload = async () => {
+        const image = new Image();
+        image.src = fileReader.result as string;
+
+        image.onload = async () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          // Calculate the new dimensions while keeping aspect ratio
+          const maxWidth = 1280;
+          const maxHeight = 720;
+          let width = image.width;
+          let height = image.height;
+
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          // Draw the image on the canvas with the new dimensions
+          ctx?.drawImage(image, 0, 0, width, height);
+
+          // Convert the canvas to a compressed format such as JPEG or WebP
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.7);
+
+          // Convert the compressed data URL to an ArrayBuffer
+          const arrayBuffer = await new Promise<ArrayBuffer>((resolve) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", compressedDataUrl);
+            xhr.responseType = "arraybuffer";
+            xhr.onload = () => {
+              resolve(xhr.response);
+            };
+            xhr.send();
+          });
 
           // You can now send the ArrayBuffer in the fetch request
-          await sendArrayBuffer(arrayBuffer as ArrayBuffer);
+          await sendArrayBuffer(arrayBuffer);
         };
+      };
 
-        // Read the file as an ArrayBuffer
-        fileReader.readAsArrayBuffer(selectedFile);
-      } catch (error) {
-        // Handle any errors that may occur during the process
-        console.error("An error occurred:", error);
-      }
+      // Read the file as a data URL
+      fileReader.readAsDataURL(file);
+    } catch (error) {
+      // Handle any errors that may occur during the process
+      console.error("An error occurred:", error);
     }
   };
 
@@ -47,7 +94,7 @@ export default function FileSelection() {
 
       console.log(data);
 
-      router.push(`/${data.id as string}` ?? '/');
+      router.push(`/${data.id as string}` ?? "/");
 
       // Handle success or errors here
     } catch (error) {
@@ -60,7 +107,7 @@ export default function FileSelection() {
     e.preventDefault();
     const selectedFile = e.dataTransfer.files?.[0];
     if (selectedFile) {
-      console.log(selectedFile);
+      handleFile(selectedFile);
     }
   };
 
