@@ -7,22 +7,20 @@ interface Thumbnail {
 }
 
 async function getThumbnails() {
-  const data = await fetch(`${process.env.API_URL}/api/images`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    next: {
-      revalidate: 3600,
-    },
-  })
-    .then((res) => res.json())
-    .catch((err) => {
-      console.error(err);
-      return [];
+  try {
+    const data = await fetch(`${process.env.API_URL}/api/images`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: {
+        revalidate: 3600,
+      },
     });
-
-  return data;
+    return await data.json();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export default async function Explore() {
