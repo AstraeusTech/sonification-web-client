@@ -66,7 +66,7 @@ export default function Model(props: ModelProps) {
         />
       </mesh>
       <Center>
-        <primitive object={props.pcd} scale={[0.5, 0.5, 0.5]} rotation={[Math.PI/2, 0, 0]} />
+        <primitive object={props.pcd} scale={[0.5, 0.5, 0.5]} />
       </Center>
       <OrthographicCamera ref={camera} makeDefault position={position} />
     </mesh>

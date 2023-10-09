@@ -1,8 +1,9 @@
-'use client';
-import Image from 'next/image';
-import { useState } from 'react';
-import FileSelection from './_components/FileSelection';
-import { ChevronDown } from './_components/icons';
+/* eslint-disable @next/next/no-img-element */
+"use client";
+import Image from "next/image";
+import { useState } from "react";
+import FileSelection from "./_components/FileSelection";
+import { ChevronDown } from "./_components/icons";
 
 export default function Home() {
   const [showFileSelection, setShowFileSelection] = useState(false);

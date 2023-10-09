@@ -12,18 +12,18 @@ export default function ToolOverlay(props: ToolOverlayProps): JSX.Element {
     <div className="absolute bottom-10 w-full p-5 flex flex-row gap-10 justify-center items-center rounded-lg">
       <div className="w-screen pl-10 ">
         <WaveSurferPlayer
-          height={100}
+          height={60}
           waveColor="rgb(125, 25, 25)"
           progressColor="rgb(255, 0, 0)"
           url={props.url}
           container={""}
-          barHeight={5}
+          barHeight={1}
           barWidth={4}
           barGap={2}
           barAlign={"bottom"}
           barRadius={2.5}
           mediaControls={true}
-          normalize={true}
+          normalize={false}
           currentTime={props.currentTime}
         />
       </div>

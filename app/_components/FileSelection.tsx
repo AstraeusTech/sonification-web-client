@@ -65,7 +65,7 @@ export default function FileSelection() {
   };
 
   return loading ? (
-    <></>
+    <span className="loading loading-dots loading-lg" />
   ) : (
     <div
       onDrop={handleDrop}
