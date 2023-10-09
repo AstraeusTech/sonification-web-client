@@ -36,23 +36,26 @@ export async function GET(_request: Request) {
     })
     .slice(0, 20);
 
-  const images = await Promise.all(
-    recentImages.map(async (obj) => {
-      const params: GetObjectCommand = new GetObjectCommand({
-        Bucket: bucket,
-        Key: obj.Key,
-      });
+  try {
+    const images = await Promise.all(
+      recentImages.map(async (obj) => {
+        const params: GetObjectCommand = new GetObjectCommand({
+          Bucket: bucket,
+          Key: obj.Key,
+        });
 
-      const url = await getSignedUrl(client, params, {
-        expiresIn: 3600,
-      });
+        const url = await getSignedUrl(client, params, {
+          expiresIn: 3600,
+        });
 
-      return {
-        url: url,
-        fileName: obj.Key?.split(".")[0] as string,
-      };
-    })
-  );
-
-  return new Response(JSON.stringify(images || []));
+        return {
+          url: url,
+          fileName: obj.Key?.split(".")[0] as string,
+        };
+      })
+    );
+    return new Response(JSON.stringify(images || []));
+  } catch (e) {
+    return new Response(JSON.stringify([]));
+  }
 }
