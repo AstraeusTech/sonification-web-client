@@ -30,7 +30,7 @@ export default async function Explore() {
     <div className="container pt-24">
       <h1 className="text-3xl font-bold mb-4">Latest Uploads</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {data.map((image, index) => (
+        {data && data.map((image, index) => (
           <Link href={image.fileName ?? ""} key={`model-${index}`}>
             <div className="h-52 w-52 shadow-xl mx-auto overflow-hidden">
               <img
