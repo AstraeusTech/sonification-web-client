@@ -16,26 +16,16 @@ async function uploadFile(buffer: Buffer): Promise<string> {
   try {
     await client.send(uploadCommand);
 
-    console.log('uploaded file to s3');
-    console.log('attempting to call python api');
-
-    console.log(
-      'process.env.SONIFICATION_API_URL: ',
-      process.env.SONIFICATION_API_URL,
-    );
-
     const res = await fetch(`${process.env.SONIFICATION_API_URL}/${uuid}.png`, {
       headers: {
         contentType: 'application/json',
       },
     });
 
-    // console.log('res: ', res);
 
     if (!res.ok) {
       throw new Error('Network response was not ok');
     }
-    console.log('response was ok');
     return uuid;
   } catch (err: any) {
     if (err.code === 'EntityAlreadyExists') {

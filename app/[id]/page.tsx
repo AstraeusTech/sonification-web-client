@@ -15,7 +15,6 @@ export default function Sonification({ params }: { params: { id: string } }) {
     const getFileUrls = async () => {
       const response = await fetch(`/api/${params.id}`);
       const data = await response.json();
-      console.log(data);
       return data;
     };
 

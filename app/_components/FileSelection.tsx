@@ -92,7 +92,6 @@ export default function FileSelection() {
 
       const data = await res.json();
 
-      console.log(data);
 
       router.push(`/${data.id as string}` ?? "/");
 
@@ -106,7 +105,7 @@ export default function FileSelection() {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const selectedFile = e.dataTransfer.files?.[0];
-    if (selectedFile) {
+    if (selectedFile && (selectedFile.type === "image/jpeg" || selectedFile.type === "image/png")) {
       handleFile(selectedFile);
     }
   };
@@ -127,8 +126,10 @@ export default function FileSelection() {
           type="file"
           className="file-input file-input-bordered w-full max-w-xs"
           onChange={handleFileChange}
+          accept="image/jpeg, image/png"
         />
       </div>
     </div>
   );
 }
+
