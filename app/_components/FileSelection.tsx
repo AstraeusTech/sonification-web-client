@@ -1,9 +1,12 @@
 "use client";
 
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
 export default function FileSelection() {
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
@@ -35,10 +38,16 @@ export default function FileSelection() {
       const buffer = Buffer.from(arrayBuffer);
 
       // Send the Buffer in the fetch request
-      await fetch("/api/upload", {
+      const res = await fetch("/api/upload", {
         method: "POST",
         body: buffer,
       });
+
+      const data = await res.json();
+
+      console.log(data);
+
+      router.push(`/${data.id as string}` ?? '/');
 
       // Handle success or errors here
     } catch (error) {

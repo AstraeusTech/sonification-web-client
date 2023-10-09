@@ -43,7 +43,7 @@ export default function Home() {
           )}
         </div>
         <a href="#features" className="absolute bottom-8">
-          <ChevronDown className="animate-bounce" size={"lg"} />
+          <ChevronDown className="animate-bounce" size={'lg'} />
         </a>
       </div>
 
@@ -59,7 +59,7 @@ export default function Home() {
               <div className="lg:pr-8 lg:pt-4">
                 <div className="lg:max-w-lg">
                   <h2 className="text-base font-semibold leading-7 text-indigo-600">
-                    Deploy faster
+                    Explore the cosmos
                   </h2>
                   <p className="mt-2 text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl">
                     A better workflow
