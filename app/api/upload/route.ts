@@ -1,6 +1,6 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
-const client = new S3Client({ region: process.env.AWS_DEFAULT_REGION });
+const client = new S3Client();
 const bucket = process.env.S3_BUCKET;
 
 import { v4 as uuidv4 } from 'uuid';
