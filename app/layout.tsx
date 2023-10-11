@@ -7,8 +7,8 @@ const inter = Inter({subsets: ['latin']});
 
 
 export const metadata: Metadata = {
-  title: 'Sonification',
-  description: 'Sonification web app',
+  title: 'Astrorpheus',
+  description: 'Sonficiation and point cloud web app',
 };
 
 export default function RootLayout({

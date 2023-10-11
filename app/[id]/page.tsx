@@ -26,11 +26,15 @@ export default function Sonification({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {modelUrl && soundUrl && (
+      {modelUrl && soundUrl ? (
         <>
           <ModelViewer view={view} currentTime={currentTime} url={modelUrl} />
           <ToolOverlay view={view} currentTime={currentTime} url={soundUrl} />
         </>
+      ) : (
+        <div className="container min-h-screen flex items-center justify-center">
+            <span className="loading loading-dots loading-lg" />
+        </div>
       )}
     </>
   );

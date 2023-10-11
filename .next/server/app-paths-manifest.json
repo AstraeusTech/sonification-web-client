@@ -1,0 +1,10 @@
+{
+  "/_not-found": "app/_not-found.js",
+  "/page": "app/page.js",
+  "/icon.png/route": "app/icon.png/route.js",
+  "/[id]/page": "app/[id]/page.js",
+  "/api/[id]/route": "app/api/[id]/route.js",
+  "/api/upload/route": "app/api/upload/route.js",
+  "/explore/page": "app/explore/page.js",
+  "/api/images/route": "app/api/images/route.js"
+}
