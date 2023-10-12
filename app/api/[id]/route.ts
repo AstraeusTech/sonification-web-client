@@ -7,7 +7,7 @@ interface GetParams {
   };
 }
 
-const client = new S3Client();
+const client = new S3Client({ region: process.env.AWS_DEFAULT_REGION });
 const bucket = process.env.S3_BUCKET;
 
 export async function GET(request: Request, { params }: GetParams) {

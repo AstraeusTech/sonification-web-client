@@ -17,43 +17,26 @@ interface Thumbnail {
 const client = new S3Client({ region: process.env.AWS_DEFAULT_REGION });
 const bucket = process.env.S3_BUCKET;
 
-console.log(bucket);
-console.log(process.env.AWS_DEFAULT_REGION);
 
 async function getThumbnails() {
-  const allObjects = [];
-  let continuationToken;
-
-  do {
-    console.log("print bucket", bucket);
-    const params: ListObjectsV2Command = new ListObjectsV2Command({
-      Bucket: bucket,
-      ContinuationToken: continuationToken,
-    });
-
-    const response = await client.send(params);
-    const objects = response.Contents || [];
-    allObjects.push(...objects);
-    continuationToken = response.NextContinuationToken;
-  } while (continuationToken);
-
-  const recentImages = allObjects
-    .filter(
-      (obj) => obj.LastModified !== undefined && obj.Key?.includes(".png")
-    )
-    .sort((a, b) => {
-      if (a.LastModified && b.LastModified) {
-        return b.LastModified.getTime() - a.LastModified.getTime();
-      }
-      return 0;
-    })
-    .slice(0, 20);
+  const exploreImageKeys = [
+    "asteroid.png",
+    "star-cluster.png",
+    "sun.png",
+    "cee9be4c-6152-403d-9bf9-8fbf95d8e91b.png",
+    "fa68de26-4cd3-4054-abd5-6cae6f66f090.png",
+    "c896c43e-af06-4d45-9e1d-d47ea370c2e8.png",
+    "30083357-1f72-443b-83a7-f0e68c2173e7.png",
+    "4244bcfb-0352-4402-aa4f-b41138d352ff.png",
+    "75cce2f8-dc5b-49f0-920f-d6082fa2756a.png",
+    "36b6f5d3-7c9f-4490-8320-adbf333215d9.png",
+  ];
 
   const images = await Promise.all(
-    recentImages.map(async (obj) => {
+    exploreImageKeys.map(async (obj) => {
       const params: GetObjectCommand = new GetObjectCommand({
         Bucket: bucket,
-        Key: obj.Key,
+        Key: obj,
       });
 
       const url = await getSignedUrl(client, params, {
@@ -62,7 +45,7 @@ async function getThumbnails() {
 
       return {
         url: url,
-        fileName: obj.Key?.split(".")[0] as string,
+        fileName: obj.split(".")[0] as string,
       };
     })
   );
