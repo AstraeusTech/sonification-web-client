@@ -1,4 +1,4 @@
-// File: /Users/ethan/dev/projects/sonification-web-client/app/explore/page.tsx
+// File: /Users/mirmukhammadmirsodikov/Documents/Development/sandbox/NASASpaceApps2023/sonification-web-app/app/explore/page.tsx
 import * as entry from '../../../../app/explore/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

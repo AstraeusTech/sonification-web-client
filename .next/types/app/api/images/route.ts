@@ -1,4 +1,4 @@
-// File: /Users/ethan/dev/projects/sonification-web-client/app/api/images/route.ts
+// File: /Users/mirmukhammadmirsodikov/Documents/Development/sandbox/NASASpaceApps2023/sonification-web-app/app/api/images/route.ts
 import * as entry from '../../../../../app/api/images/route.js'
 import type { NextRequest } from 'next/server.js'
 
