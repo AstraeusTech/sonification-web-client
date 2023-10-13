@@ -3,8 +3,8 @@
   "/page": "/",
   "/icon.png/route": "/icon.png",
   "/[id]/page": "/[id]",
-  "/explore/page": "/explore",
   "/api/[id]/route": "/api/[id]",
   "/api/upload/route": "/api/upload",
+  "/explore/page": "/explore",
   "/api/images/route": "/api/images"
 }
