@@ -69,7 +69,7 @@ export default async function Explore() {
 
   return (
     <div className="container pt-20">
-      <h1 className="text-3xl font-bold mb-4">Our Currated Collections</h1>
+      <h1 className="text-3xl font-bold mb-4">Our Currated Collection</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {data &&
           data.map((image, index) => (
